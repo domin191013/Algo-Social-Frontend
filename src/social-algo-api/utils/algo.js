@@ -35,9 +35,96 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.apiSubmitTransactions = void 0;
+exports.proceedTransaction = exports.getCloseOutTransaction = exports.getTransaction = void 0;
+var algosdk_1 = __importDefault(require("algosdk"));
+var utils_1 = require("@json-rpc-tools/utils");
 var index_1 = require("./index");
+function getTransaction(chain, accountId, apiParam) {
+    return __awaiter(this, void 0, void 0, function () {
+        var client, txnParams, txn;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    client = (0, index_1.clientForChain)(chain);
+                    return [4 /*yield*/, client.getTransactionParams().do()];
+                case 1:
+                    txnParams = _a.sent();
+                    return [4 /*yield*/, algosdk_1.default.makeApplicationOptInTxn(accountId, txnParams, (0, index_1.getAppId)(chain), apiParam, undefined, undefined, undefined, undefined, undefined, algosdk_1.default.getApplicationAddress((0, index_1.getAppId)(chain)))];
+                case 2:
+                    txn = _a.sent();
+                    return [2 /*return*/, txn];
+            }
+        });
+    });
+}
+exports.getTransaction = getTransaction;
+function getCloseOutTransaction(chain, accountId, apiParam) {
+    return __awaiter(this, void 0, void 0, function () {
+        var client, txnParams, txn;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    client = (0, index_1.clientForChain)(chain);
+                    return [4 /*yield*/, client.getTransactionParams().do()];
+                case 1:
+                    txnParams = _a.sent();
+                    return [4 /*yield*/, algosdk_1.default.makeApplicationCloseOutTxn(accountId, txnParams, (0, index_1.getAppId)(chain), apiParam, undefined, undefined, undefined, undefined, undefined, algosdk_1.default.getApplicationAddress((0, index_1.getAppId)(chain)))];
+                case 2:
+                    txn = _a.sent();
+                    return [2 /*return*/, txn];
+            }
+        });
+    });
+}
+exports.getCloseOutTransaction = getCloseOutTransaction;
+function proceedTransaction(chain, txn, connector) {
+    return __awaiter(this, void 0, void 0, function () {
+        var txnsToSign, requestParams, request, result, decodedResult;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, getSigningTransaction(txn)];
+                case 1:
+                    txnsToSign = _a.sent();
+                    requestParams = [txnsToSign];
+                    request = (0, utils_1.formatJsonRpcRequest)("algo_signTxn", requestParams);
+                    return [4 /*yield*/, connector.sendCustomRequest(request)];
+                case 2:
+                    result = _a.sent();
+                    decodedResult = result.map(function (element) {
+                        return new Uint8Array(Buffer.from(element, "base64"));
+                    });
+                    return [4 /*yield*/, apiSubmitTransactions(chain, decodedResult)];
+                case 3:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.proceedTransaction = proceedTransaction;
+function getSigningTransaction(txn) {
+    return __awaiter(this, void 0, void 0, function () {
+        var txns, txnsToSign;
+        return __generator(this, function (_a) {
+            txns = [txn];
+            txnsToSign = txns.map(function (txn) {
+                var encodedTxn = Buffer.from(algosdk_1.default.encodeUnsignedTransaction(txn)).toString("base64");
+                return {
+                    txn: encodedTxn,
+                    message: "Description of transaction being signed",
+                    // Note: if the transaction does not need to be signed (because it's part of an atomic group
+                    // that will be signed by another party), specify an empty singers array like so:
+                    // signers: [],
+                };
+            });
+            return [2 /*return*/, txnsToSign];
+        });
+    });
+}
 function apiSubmitTransactions(chain, stxns) {
     return __awaiter(this, void 0, void 0, function () {
         var txId;
@@ -52,7 +139,6 @@ function apiSubmitTransactions(chain, stxns) {
         });
     });
 }
-exports.apiSubmitTransactions = apiSubmitTransactions;
 function waitForTransaction(chain, txId) {
     return __awaiter(this, void 0, void 0, function () {
         var client, lastStatus, lastRound, status;

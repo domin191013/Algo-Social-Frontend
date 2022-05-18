@@ -7,7 +7,6 @@ import ContractInfo from "./components/ContractInfo";
 
 const App = () => {
     const [wallet, setWallet] = useState("");
-    const [chain, setChain] = useState("testnet");
 
     let ipfsClient;
 
@@ -78,7 +77,7 @@ const App = () => {
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-evenly",
-                height: "300px",
+                height: "630px",
                 width: "50%",
                 flexWrap: "nowrap",
                 alignItems: "center",
@@ -103,7 +102,7 @@ const App = () => {
             >
                 Deposit 0.3 algo
             </Button>
-            <ContractInfo disabled={wallet == ""} wallet={wallet} chain={chain} />
+            <ContractInfo disabled={wallet == ""} wallet={wallet} />
         </div>
     );
 };

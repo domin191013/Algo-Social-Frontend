@@ -1,2 +1,5 @@
+import algosdk from "algosdk";
 import { ChainType } from "../types";
-export declare function apiSubmitTransactions(chain: ChainType, stxns: Uint8Array[]): Promise<number>;
+export declare function getTransaction(chain: ChainType, accountId: string, apiParam: any): Promise<algosdk.Transaction>;
+export declare function getCloseOutTransaction(chain: ChainType, accountId: string, apiParam: any): Promise<algosdk.Transaction>;
+export declare function proceedTransaction(chain: ChainType, txn: any, connector: any): Promise<void>;

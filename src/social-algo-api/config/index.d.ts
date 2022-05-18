@@ -1,4 +1,5 @@
-export declare const APP_ID = 73658774;
+export declare const appIdTestNet = 73658774;
+export declare const appIdMainNet = 73658774;
 export declare const server = "https://testnet-algorand.api.purestake.io/ps2";
 export declare const token: {
     'X-API-Key': string;

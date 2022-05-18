@@ -35,62 +35,98 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __asyncValues = (this && this.__asyncValues) || function (o) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var m = o[Symbol.asyncIterator], i;
+    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+    function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.IpfsService = void 0;
-var ipfs_1 = require("ipfs");
-var IpfsService = /** @class */ (function () {
-    function IpfsService() {
-    }
-    IpfsService.prototype.initialize = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var _a;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
-                    case 0:
-                        console.log("IpfsService -> initialize");
-                        _a = this;
-                        return [4 /*yield*/, (0, ipfs_1.create)({ repo: "ok" + Math.random() })];
-                    case 1:
-                        _a.ipfsClient = _b.sent();
-                        return [2 /*return*/];
-                }
-            });
+exports.fetchIPFS = exports.get = exports.addAccount = void 0;
+function addAccount(ipfsClient, accountInfo) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    if (ipfsClient == undefined)
+                        throw new Error("ipfs is undefined");
+                    return [4 /*yield*/, ipfsClient.add(JSON.stringify(accountInfo))];
+                case 1: return [2 /*return*/, _a.sent()];
+            }
         });
-    };
-    IpfsService.prototype.addAccount = function (accountInfo) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        if (!(this.ipfsClient == undefined)) return [3 /*break*/, 2];
-                        return [4 /*yield*/, this.initialize()];
-                    case 1:
-                        _a.sent();
-                        _a.label = 2;
-                    case 2: return [4 /*yield*/, this.ipfsClient.add(JSON.stringify(accountInfo))];
-                    case 3: return [2 /*return*/, _a.sent()];
-                }
-            });
+    });
+}
+exports.addAccount = addAccount;
+function get(ipfsClient, url) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    if (ipfsClient == undefined)
+                        throw new Error("ipfs is undefined");
+                    return [4 /*yield*/, ipfsClient.cat(url)];
+                case 1: return [2 /*return*/, _a.sent()];
+            }
         });
-    };
-    IpfsService.prototype.get = function (url) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        if (!(this.ipfsClient == undefined)) return [3 /*break*/, 2];
-                        return [4 /*yield*/, this.initialize()];
-                    case 1:
-                        _a.sent();
-                        _a.label = 2;
-                    case 2:
-                        console.log("IpfsService -> get url : ", url);
-                        return [4 /*yield*/, this.ipfsClient.cat(url)];
-                    case 3: return [2 /*return*/, _a.sent()];
-                }
-            });
+    });
+}
+exports.get = get;
+/**
+ * Fetchs IPFS
+ * @returns IPFS data if successful. Null Otherwise.
+ */
+function fetchIPFS(ipfsClient, url) {
+    var e_1, _a;
+    return __awaiter(this, void 0, void 0, function () {
+        var chunks, _b, _c, chunk, e_1_1, content, jsonData, e_2;
+        return __generator(this, function (_d) {
+            switch (_d.label) {
+                case 0:
+                    _d.trys.push([0, 14, , 15]);
+                    chunks = [];
+                    _d.label = 1;
+                case 1:
+                    _d.trys.push([1, 7, 8, 13]);
+                    return [4 /*yield*/, get(ipfsClient, url)];
+                case 2:
+                    _b = __asyncValues.apply(void 0, [_d.sent()]);
+                    _d.label = 3;
+                case 3: return [4 /*yield*/, _b.next()];
+                case 4:
+                    if (!(_c = _d.sent(), !_c.done)) return [3 /*break*/, 6];
+                    chunk = _c.value;
+                    chunks.push(chunk);
+                    _d.label = 5;
+                case 5: return [3 /*break*/, 3];
+                case 6: return [3 /*break*/, 13];
+                case 7:
+                    e_1_1 = _d.sent();
+                    e_1 = { error: e_1_1 };
+                    return [3 /*break*/, 13];
+                case 8:
+                    _d.trys.push([8, , 11, 12]);
+                    if (!(_c && !_c.done && (_a = _b.return))) return [3 /*break*/, 10];
+                    return [4 /*yield*/, _a.call(_b)];
+                case 9:
+                    _d.sent();
+                    _d.label = 10;
+                case 10: return [3 /*break*/, 12];
+                case 11:
+                    if (e_1) throw e_1.error;
+                    return [7 /*endfinally*/];
+                case 12: return [7 /*endfinally*/];
+                case 13:
+                    content = Buffer.concat(chunks);
+                    jsonData = JSON.parse(content.toString());
+                    return [2 /*return*/, jsonData];
+                case 14:
+                    e_2 = _d.sent();
+                    console.log("fetchIPFS error == ", e_2);
+                    return [3 /*break*/, 15];
+                case 15: return [2 /*return*/, null];
+            }
         });
-    };
-    return IpfsService;
-}());
-exports.IpfsService = IpfsService;
+    });
+}
+exports.fetchIPFS = fetchIPFS;

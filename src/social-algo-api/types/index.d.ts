@@ -8,6 +8,10 @@ export interface IAssetData {
     unitName?: string;
     url?: string;
 }
+export interface AccInfo {
+    Registered: boolean;
+    Url: string;
+}
 export declare enum ChainType {
     MainNet = "mainnet",
     TestNet = "testnet"

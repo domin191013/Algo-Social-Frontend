@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ipfsOptions = exports.indexerPort = exports.indexerServer = exports.port = exports.token = exports.server = exports.APP_ID = void 0;
-// Test Network Configuration
-exports.APP_ID = 73658774;
+exports.ipfsOptions = exports.indexerPort = exports.indexerServer = exports.port = exports.token = exports.server = exports.appIdMainNet = exports.appIdTestNet = void 0;
+// Network Configuration
+exports.appIdTestNet = 73658774;
+exports.appIdMainNet = 73658774;
 exports.server = 'https://testnet-algorand.api.purestake.io/ps2';
 exports.token = { 'X-API-Key': 'SxyeYnXjIi7sydMnmi85L8mqXypdroBv1ZdTcBmp ' };
 exports.port = '';
