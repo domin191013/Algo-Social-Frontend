@@ -36,81 +36,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.proceedTransaction = exports.ChainType = exports.getAccount = exports.getDeleteAccountTransaction = exports.getCreateAccountTransaction = exports.isAccountRegistered = exports.apiGetTxnParams = exports.apiGetAccountAssets = void 0;
+exports.proceedTransaction = exports.ChainType = exports.getAccount = exports.getDeleteAccountTransaction = exports.getCreateAccountTransaction = void 0;
 var text_encoding_1 = require("text-encoding");
 var ipfs_1 = require("./utils/ipfs");
 var algo_1 = require("./utils/algo");
 var utils_1 = require("./utils");
-function apiGetAccountAssets(chain, address) {
-    return __awaiter(this, void 0, void 0, function () {
-        var indexer, accountInfo, algoBalance, assetsFromRes, assets;
-        var _this = this;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    indexer = (0, utils_1.indexerForChain)(chain);
-                    return [4 /*yield*/, indexer.lookupAccountByID(address).do()];
-                case 1:
-                    accountInfo = _a.sent();
-                    algoBalance = accountInfo.amount;
-                    assetsFromRes = accountInfo.assets;
-                    assets = assetsFromRes.map(function (_a) {
-                        var id = _a["asset-id"], amount = _a.amount, creator = _a.creator, frozen = _a.frozen;
-                        return ({
-                            id: Number(id),
-                            amount: amount,
-                            creator: creator,
-                            frozen: frozen,
-                            decimals: 0,
-                        });
-                    });
-                    assets.sort(function (a, b) { return a.id - b.id; });
-                    return [4 /*yield*/, Promise.all(assets.map(function (asset) { return __awaiter(_this, void 0, void 0, function () {
-                            var params;
-                            return __generator(this, function (_a) {
-                                switch (_a.label) {
-                                    case 0: return [4 /*yield*/, indexer.lookupAssetByID(asset.id).do()];
-                                    case 1:
-                                        params = (_a.sent()).params;
-                                        asset.name = params.name;
-                                        asset.unitName = params["unit-name"];
-                                        asset.url = params.url;
-                                        asset.decimals = params.decimals;
-                                        return [2 /*return*/];
-                                }
-                            });
-                        }); }))];
-                case 2:
-                    _a.sent();
-                    assets.unshift({
-                        id: 0,
-                        amount: algoBalance,
-                        creator: "",
-                        frozen: false,
-                        decimals: 6,
-                        name: "Algo",
-                        unitName: "Algo",
-                    });
-                    return [2 /*return*/, assets];
-            }
-        });
-    });
-}
-exports.apiGetAccountAssets = apiGetAccountAssets;
-function apiGetTxnParams(chain) {
-    return __awaiter(this, void 0, void 0, function () {
-        var params;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, (0, utils_1.clientForChain)(chain).getTransactionParams().do()];
-                case 1:
-                    params = _a.sent();
-                    return [2 /*return*/, params];
-            }
-        });
-    });
-}
-exports.apiGetTxnParams = apiGetTxnParams;
 /**
  * Checks if an account is registered or not
  * @returns Account Info
@@ -160,7 +90,6 @@ function isAccountRegistered(chain, accountId) {
         });
     });
 }
-exports.isAccountRegistered = isAccountRegistered;
 /**
  * Creates a new account from the selected address
  * @returns True if successful. False Otherwise.
