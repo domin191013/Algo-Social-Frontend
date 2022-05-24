@@ -6,4 +6,4 @@ export declare function get(ipfsClient: IPFS, url: string): Promise<AsyncIterabl
  * Fetchs IPFS
  * @returns IPFS data if successful. {} Otherwise.
  */
-export declare function fetchIPFS(ipfsClient: IPFS, url: string): Promise<object>;
+export declare function fetchIPFS(ipfsClient: IPFS, url: string): Promise<SocialAccount>;

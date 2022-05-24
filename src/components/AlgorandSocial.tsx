@@ -8,15 +8,16 @@ import {
   getDeleteAccountTransaction,
   proceedTransaction,
 } from "../algorand-social";
-import { ChainType } from "../algorand-social";
+import { ChainType, SocialAccount } from "../algorand-social";
 import { create } from "ipfs";
 import QRCodeModal from "algorand-walletconnect-qrcode-modal";
+import { Transaction } from "algosdk";
 
 const AlgorandSocial = () => {
   const [wallet, setWallet] = useState("");
-  const [txn, setTxn] = useState();
-  const [accountInfo, setAccountInfo] = useState();
-  const [ipfsClient, setIpfsClient] = useState(null);
+  const [txn, setTxn] = useState<Transaction>();
+  const [accountInfo, setAccountInfo] = useState<SocialAccount>();
+  const [ipfsClient, setIpfsClient] = useState<IPFS>(null);
 
   useEffect(() => {
     if (connector.connected) {
@@ -27,19 +28,17 @@ const AlgorandSocial = () => {
 
   const initializeIpfs = () => {
     if (ipfsClient != null) return;
-    create({ repo: "ok" + Math.random() })
-      .then((result) => {
-        console.log("IPFS, ", result);
-        setIpfsClient(result);
-      });
+    create({ repo: "ok" + Math.random() }).then((result) => {
+      console.log("IPFS, ", result);
+      setIpfsClient(result);
+    });
   };
 
   const handleGet = () => {
     if (wallet) {
-      getAccount(ChainType.TestNet, ipfsClient, wallet)
-        .then((result) => {
-          setAccountInfo(result);
-        });
+      getAccount(ChainType.TestNet, ipfsClient, wallet).then((result) => {
+        setAccountInfo(result);
+      });
     }
   };
 
@@ -144,7 +143,7 @@ const AlgorandSocial = () => {
 
       <h2>Account Info</h2>
       <p>Account Info: {JSON.stringify(accountInfo)}</p>
-      
+
       <Button
         color="primary"
         disabled={ipfsClient != null}
@@ -162,7 +161,7 @@ const AlgorandSocial = () => {
       >
         Get account
       </Button>
-      
+
       <Button
         color="primary"
         disabled={wallet == "" || ipfsClient == null}
@@ -171,7 +170,7 @@ const AlgorandSocial = () => {
       >
         Create account
       </Button>
-      
+
       <Button
         color="primary"
         disabled={wallet == ""}

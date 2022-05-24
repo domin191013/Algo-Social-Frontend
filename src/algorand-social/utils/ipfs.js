@@ -123,8 +123,8 @@ function fetchIPFS(ipfsClient, url) {
                 case 14:
                     e_2 = _d.sent();
                     console.log("fetchIPFS error == ", e_2);
-                    return [3 /*break*/, 15];
-                case 15: return [2 /*return*/, {}];
+                    throw e_2;
+                case 15: return [2 /*return*/];
             }
         });
     });

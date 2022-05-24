@@ -120,12 +120,12 @@ function getCreateAccountTransaction(chain, ipfsClient, wallet, name, email) {
                 case 2:
                     txn = _b.sent();
                     return [2 /*return*/, txn];
-                case 3: return [3 /*break*/, 5];
+                case 3: throw "Wallet is empty";
                 case 4:
                     e_2 = _b.sent();
                     console.log("create an account error === ", e_2);
-                    return [3 /*break*/, 5];
-                case 5: return [2 /*return*/, null];
+                    throw e_2;
+                case 5: return [2 /*return*/];
             }
         });
     });
@@ -150,12 +150,12 @@ function getDeleteAccountTransaction(chain, wallet) {
                 case 1:
                     txn = _a.sent();
                     return [2 /*return*/, txn];
-                case 2: return [3 /*break*/, 4];
+                case 2: throw "Wallet is empty";
                 case 3:
                     e_3 = _a.sent();
                     console.log("deleteAccount error == ", e_3);
-                    return [3 /*break*/, 4];
-                case 4: return [2 /*return*/, null];
+                    throw e_3;
+                case 4: return [2 /*return*/];
             }
         });
     });
@@ -180,12 +180,12 @@ function getAccount(chain, ipfsClient, address) {
                 case 2:
                     accInfoJson = _a.sent();
                     return [2 /*return*/, accInfoJson];
-                case 3: return [3 /*break*/, 5];
+                case 3: throw "Account isn't registered";
                 case 4:
                     e_4 = _a.sent();
                     console.log("get accountinfo error === ", e_4);
-                    return [3 /*break*/, 5];
-                case 5: return [2 /*return*/, null];
+                    throw e_4;
+                case 5: return [2 /*return*/];
             }
         });
     });
