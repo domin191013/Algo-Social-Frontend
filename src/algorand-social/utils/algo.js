@@ -95,6 +95,10 @@ function proceedTransaction(chain, txn, connector) {
                 case 2:
                     result = _a.sent();
                     decodedResult = result.map(function (element) {
+                        var txId = 111;
+                        if (element == null) {
+                            throw new Error("Transaction ".concat(txId, ": was not signed when it should have been"));
+                        }
                         return new Uint8Array(Buffer.from(element, "base64"));
                     });
                     return [4 /*yield*/, apiSubmitTransactions(chain, decodedResult)];
