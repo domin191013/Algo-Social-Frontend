@@ -102,9 +102,7 @@ function proceedTransaction(chain, txn, connector) {
                         return new Uint8Array(Buffer.from(element, "base64"));
                     });
                     return [4 /*yield*/, apiSubmitTransactions(chain, decodedResult)];
-                case 3:
-                    _a.sent();
-                    return [2 /*return*/];
+                case 3: return [2 /*return*/, _a.sent()];
             }
         });
     });

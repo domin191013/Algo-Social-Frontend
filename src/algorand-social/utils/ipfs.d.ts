@@ -1,8 +1,9 @@
 import { SocialAccount } from "../types";
-export declare function addAccount(ipfsClient: any, accountInfo: SocialAccount): Promise<any>;
-export declare function get(ipfsClient: any, url: string): Promise<any>;
+import { IPFS } from "ipfs-core-types";
+export declare function addAccount(ipfsClient: IPFS, accountInfo: SocialAccount): Promise<import("ipfs-core-types/src/root").AddResult>;
+export declare function get(ipfsClient: IPFS, url: string): Promise<AsyncIterable<Uint8Array>>;
 /**
  * Fetchs IPFS
- * @returns IPFS data if successful. Null Otherwise.
+ * @returns IPFS data if successful. {} Otherwise.
  */
-export declare function fetchIPFS(ipfsClient: any, url: string): Promise<any>;
+export declare function fetchIPFS(ipfsClient: IPFS, url: string): Promise<object>;

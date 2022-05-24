@@ -74,7 +74,7 @@ function get(ipfsClient, url) {
 exports.get = get;
 /**
  * Fetchs IPFS
- * @returns IPFS data if successful. Null Otherwise.
+ * @returns IPFS data if successful. {} Otherwise.
  */
 function fetchIPFS(ipfsClient, url) {
     var e_1, _a;
@@ -124,7 +124,7 @@ function fetchIPFS(ipfsClient, url) {
                     e_2 = _d.sent();
                     console.log("fetchIPFS error == ", e_2);
                     return [3 /*break*/, 15];
-                case 15: return [2 /*return*/, null];
+                case 15: return [2 /*return*/, {}];
             }
         });
     });
