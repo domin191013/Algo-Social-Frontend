@@ -4,13 +4,17 @@ exports.ipfsOptions = exports.indexerPort = exports.indexerServer = exports.port
 // Network Configuration
 exports.appIdTestNet = 73658774;
 exports.appIdMainNet = 73658774;
-exports.server = 'https://testnet-algorand.api.purestake.io/ps2';
-exports.token = { 'X-API-Key': 'SxyeYnXjIi7sydMnmi85L8mqXypdroBv1ZdTcBmp ' };
-exports.port = '';
+exports.server = "https://testnet-algorand.api.purestake.io/ps2";
+exports.token = {
+    "X-API-Key": "SxyeYnXjIi7sydMnmi85L8mqXypdroBv1ZdTcBmp ",
+};
+exports.port = "";
 // Test Network Indexer
-exports.indexerServer = 'https://testnet-algorand.api.purestake.io/idx2';
-exports.indexerPort = '';
+exports.indexerServer = "https://testnet-algorand.api.purestake.io/idx2";
+exports.indexerPort = "";
 exports.ipfsOptions = {
+    repo: "./orbitdb",
+    start: true,
     EXPERIMENTAL: {
         pubsub: true,
     },
@@ -32,4 +36,11 @@ exports.ipfsOptions = {
             ],
         },
     },
+    relay: {
+        enabled: true,
+        hop: {
+            enabled: true, // enable circuit relay HOP (make this node a relay)
+        },
+    },
+    pubsub: true,
 };

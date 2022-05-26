@@ -1,10 +1,10 @@
 import * as React from "react";
 import "./../assets/scss/App.scss";
-import AlgorandSocial from "./AlgorandSocial";
+import Container from "./Container";
 
 const App = () => (
   <div className="app">
-    <AlgorandSocial />
+    <Container />
   </div>
 );
 

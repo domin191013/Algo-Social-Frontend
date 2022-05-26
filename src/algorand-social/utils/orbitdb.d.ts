@@ -1,0 +1,12 @@
+import { IPFS } from "ipfs-core-types";
+export declare const initializeIPFSPubSub: (ipfsClient: IPFS, id: string) => any;
+export declare const createOrbitDbClient: (ipfsClient: IPFS) => Promise<any>;
+export declare const getChannelDbAddress: (address: string) => string;
+export declare const createChannelDb: (address: string, orbitDb: any) => Promise<any>;
+export declare const getChannelInfos: (address: string, orbitDb: any) => Promise<any>;
+export declare const addChannelInfo: (address: string, orbitDb: any, channelOwner: string, channelName: string) => Promise<boolean>;
+export declare const getChannelName: (address: string, name: string) => string;
+export declare const createChannel: (ipfsPubsubClient: any, address: string, name: string) => Promise<void>;
+export declare const sendMessage: (ipfsPubsubClient: any, address: string, name: string, message: string) => Promise<void>;
+export declare const joinChannel: (ipfsPubsubClient: any, address: string, name: string, onMessageHandler: any, onNewPeerHandler: any) => Promise<void>;
+export declare const leaveChannel: (ipfsPubsubClient: any, address: string, name: string) => Promise<void>;

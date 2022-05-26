@@ -43,7 +43,20 @@ var __asyncValues = (this && this.__asyncValues) || function (o) {
     function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fetchIPFS = exports.get = exports.addAccount = void 0;
+exports.fetchIPFS = exports.get = exports.addAccount = exports.createIpfsClient = void 0;
+var config_1 = require("../config");
+var ipfs_1 = require("ipfs");
+function createIpfsClient() {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, (0, ipfs_1.create)(config_1.ipfsOptions)];
+                case 1: return [2 /*return*/, _a.sent()];
+            }
+        });
+    });
+}
+exports.createIpfsClient = createIpfsClient;
 function addAccount(ipfsClient, accountInfo) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {

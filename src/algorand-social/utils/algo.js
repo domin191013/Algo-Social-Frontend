@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.proceedTransaction = exports.getCloseOutTransaction = exports.getTransaction = void 0;
+exports.proceedTransaction = exports.proceedTransactionWithSk = exports.getCloseOutTransaction = exports.getTransaction = void 0;
 var algosdk_1 = __importDefault(require("algosdk"));
 var utils_1 = require("@json-rpc-tools/utils");
 var index_1 = require("./index");
@@ -81,6 +81,23 @@ function getCloseOutTransaction(chain, accountId, apiParam) {
     });
 }
 exports.getCloseOutTransaction = getCloseOutTransaction;
+function proceedTransactionWithSk(chain, txn, sk) {
+    return __awaiter(this, void 0, void 0, function () {
+        var decodedResult, txId;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    decodedResult = txn.signTxn(sk);
+                    return [4 /*yield*/, (0, index_1.clientForChain)(chain).sendRawTransaction(decodedResult).do()];
+                case 1:
+                    txId = (_a.sent()).txId;
+                    return [4 /*yield*/, waitForTransaction(chain, txId)];
+                case 2: return [2 /*return*/, _a.sent()];
+            }
+        });
+    });
+}
+exports.proceedTransactionWithSk = proceedTransactionWithSk;
 function proceedTransaction(chain, txn, connector) {
     return __awaiter(this, void 0, void 0, function () {
         var txnsToSign, requestParams, request, result, decodedResult;

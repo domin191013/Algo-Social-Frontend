@@ -1,4 +1,18 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -36,7 +50,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.proceedTransaction = exports.ChainType = exports.getAccount = exports.getDeleteAccountTransaction = exports.getCreateAccountTransaction = void 0;
+exports.proceedTransactionWithSk = exports.proceedTransaction = exports.ChainType = exports.getAccount = exports.getDeleteAccountTransaction = exports.getCreateAccountTransaction = void 0;
 var text_encoding_1 = require("text-encoding");
 var ipfs_1 = require("./utils/ipfs");
 var algo_1 = require("./utils/algo");
@@ -195,3 +209,6 @@ var types_1 = require("./types");
 Object.defineProperty(exports, "ChainType", { enumerable: true, get: function () { return types_1.ChainType; } });
 var algo_2 = require("./utils/algo");
 Object.defineProperty(exports, "proceedTransaction", { enumerable: true, get: function () { return algo_2.proceedTransaction; } });
+Object.defineProperty(exports, "proceedTransactionWithSk", { enumerable: true, get: function () { return algo_2.proceedTransactionWithSk; } });
+__exportStar(require("./utils/orbitdb"), exports);
+__exportStar(require("./utils/ipfs"), exports);

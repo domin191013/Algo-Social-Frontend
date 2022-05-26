@@ -19,4 +19,6 @@ export declare function getAccount(chain: ChainType, ipfsClient: IPFS, address: 
 export { ChainType } from "./types";
 export type { AccInfo } from "./types";
 export type { SocialAccount } from "./types";
-export { proceedTransaction } from "./utils/algo";
+export { proceedTransaction, proceedTransactionWithSk } from "./utils/algo";
+export * from "./utils/orbitdb";
+export * from "./utils/ipfs";
